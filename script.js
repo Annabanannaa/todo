@@ -8,7 +8,7 @@ btnAdd.addEventListener('click', () => {
   <div class="task__item js-item">
       <span class="text">${task}</span>
       <button class="btn js-btn-menu">...</button>
-      <div class="task-modal js=modal">
+      <div class="task-modal js-modal">
         <p class="modification">изменить</p>
         <p class="deleted">удалить</p>
       </div>
@@ -26,7 +26,8 @@ btnAdd.addEventListener('click', () => {
     if (menuBtn.classList.contains('listener-added')) return;
 
     menuBtn.classList.add('listener-added');
-    menuBtn.addEventListener('click', () => {
+    menuBtn.addEventListener('click', (event) => {
+      event.stopPropagation();
       menuBtn.classList.toggle('activeTask');
     });
 
@@ -61,5 +62,16 @@ btnAdd.addEventListener('click', () => {
       })
     });
   });
+});
 
+document.addEventListener('click', (event) => {
+  if (event.target.classList.contains('js-modal')) return;
+
+  const menuBtns = document.querySelectorAll('.js-btn-menu');
+  menuBtns.forEach(item => {
+    item.classList.remove('activeTask');
+  });
+
+
+  console.log(event);
 });
